@@ -1,0 +1,541 @@
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Archivo+Expanded:wght@700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+.mp-app{
+  --mp-ink:#181B22;
+  --mp-ink-soft:#3A3F4A;
+  --mp-amber:#E76F13;
+  --mp-amber-dark:#B7550C;
+  --mp-amber-tint:#FDEEE1;
+  --mp-paper:#FBF9F4;
+  --mp-line:#E7E2D6;
+  --mp-line-soft:#EFECE3;
+  --mp-success-bg:#EAF3DE;
+  --mp-success-text:#3B6D11;
+  --mp-error-bg:#FCEBEB;
+  --mp-error-text:#A32D2D;
+  font-family:Arial,Helvetica,sans-serif;
+  padding:1.5rem 0;
+  color:var(--color-text-primary,var(--mp-ink));
+}
+
+.mp-header{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:1.75rem;padding-bottom:1.1rem;
+  border-bottom:2px solid var(--mp-ink);
+}
+.mp-mark{
+  width:38px;height:38px;flex:0 0 38px;
+  background:var(--mp-ink);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Archivo Expanded',Arial,sans-serif;
+  font-size:12px;font-weight:700;color:var(--mp-amber);
+  letter-spacing:.02em;
+  position:relative;
+}
+.mp-mark::after{
+  content:"";position:absolute;bottom:-3px;right:-3px;
+  width:10px;height:10px;background:var(--mp-amber);border-radius:2px;
+}
+.mp-header-text .mp-kicker{
+  font-family:'Archivo',Arial,sans-serif;
+  font-size:10.5px;font-weight:700;letter-spacing:.14em;
+  color:var(--mp-amber-dark);text-transform:uppercase;margin-bottom:2px;
+}
+.mp-header-text h1{
+  font-family:'Archivo',Arial,sans-serif;
+  font-size:19px;font-weight:700;color:var(--mp-ink);
+  letter-spacing:-.01em;
+}
+.mp-header-text p{font-size:12px;color:var(--mp-ink-soft);margin-top:2px;}
+
+.mp-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.1rem;}
+@media(max-width:720px){.mp-two-col{grid-template-columns:1fr;}}
+
+.mp-card{
+  background:var(--color-background-primary,#fff);
+  border:1px solid var(--mp-line);
+  border-radius:12px;
+  padding:1.35rem;
+  box-shadow:0 1px 2px rgba(24,27,34,.04);
+}
+.mp-card-title{
+  display:flex;align-items:center;gap:9px;
+  margin-bottom:1.1rem;padding-bottom:.85rem;
+  border-bottom:1px solid var(--mp-line-soft);
+}
+.mp-step-num{
+  width:20px;height:20px;flex:0 0 20px;border-radius:50%;
+  background:var(--mp-ink);color:var(--mp-amber);
+  font-family:'Archivo',Arial,sans-serif;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.mp-card-title span{
+  font-family:'Archivo',Arial,sans-serif;
+  font-size:11.5px;font-weight:700;color:var(--mp-ink);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+
+.upload-zone{
+  border:1.5px dashed var(--mp-line);border-radius:10px;
+  padding:2.1rem 1rem;text-align:center;cursor:pointer;
+  transition:border-color .15s,background .15s;
+  background:var(--mp-paper);
+}
+.upload-zone:hover{border-color:var(--mp-amber);background:var(--mp-amber-tint);}
+.upload-zone i{font-size:26px;color:var(--mp-amber-dark);display:block;margin-bottom:9px;}
+.upload-zone p{font-size:13px;font-weight:600;color:var(--mp-ink);}
+.upload-zone small{font-size:11px;color:var(--mp-ink-soft);display:block;margin-top:3px;}
+
+.badge-ok{background:var(--mp-success-bg);color:var(--mp-success-text);font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;margin-top:10px;}
+.badge-err{background:var(--mp-error-bg);color:var(--mp-error-text);font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;margin-top:10px;}
+
+.field-group{margin-bottom:11px;}
+.field-label{font-size:10.5px;font-weight:600;color:var(--mp-ink-soft);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.03em;}
+.field-input{
+  width:100%;padding:8px 10px;font-size:12.5px;
+  border:1px solid var(--mp-line);border-radius:7px;
+  background:var(--color-background-primary,#fff);color:var(--mp-ink);
+  transition:border-color .15s,box-shadow .15s;
+}
+.field-input:focus{outline:none;border-color:var(--mp-amber);box-shadow:0 0 0 3px var(--mp-amber-tint);}
+.field-input::placeholder{color:#B9B4A6;}
+
+.section-sep{border:none;border-top:1px solid var(--mp-line-soft);margin:16px 0 12px;}
+.mp-subhead{font-size:10.5px;color:var(--mp-amber-dark);margin-bottom:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+
+.btn-gen{
+  width:100%;padding:13px;background:var(--mp-ink);color:#fff;border:none;
+  border-radius:9px;font-size:14px;font-weight:700;font-family:'Archivo',Arial,sans-serif;
+  letter-spacing:.02em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:1.1rem;transition:background .15s,transform .1s;
+}
+.btn-gen:hover{background:#000;}
+.btn-gen:active{transform:scale(.99);}
+.btn-gen i{color:var(--mp-amber);}
+
+.btn-print{
+  background:var(--mp-ink);color:#fff;border:none;border-radius:8px;
+  padding:8px 15px;font-size:12px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+}
+.btn-print:hover{background:#000;}
+.btn-print i{color:var(--mp-amber);}
+
+.preview-hdr{display:flex;justify-content:space-between;align-items:center;margin:1.85rem 0 1rem;}
+.preview-hdr h2{font-family:'Archivo',Arial,sans-serif;font-size:15px;font-weight:700;color:var(--mp-ink);}
+.preview-hdr .mp-sub{font-size:11px;color:var(--mp-ink-soft);margin-top:1px;}
+
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--mp-line);border-top-color:var(--mp-amber);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:7px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.debug-box{background:var(--mp-paper);border:1px solid var(--mp-line-soft);border-radius:8px;padding:11px 12px;margin-top:10px;font-size:11px;color:var(--mp-ink-soft);max-height:130px;overflow-y:auto;line-height:1.6;}
+.debug-box strong{color:var(--mp-ink);}
+
+/* ---------- ACTA DOCUMENT ---------- */
+.acta-wrap{
+  background:var(--mp-paper);
+  border:1px solid var(--mp-line);border-radius:12px;
+  padding:6px;box-shadow:0 2px 10px rgba(24,27,34,.06);
+}
+.acta{
+  font-family:Arial,sans-serif;font-size:11px;color:#181B22;background:#fff;
+  padding:34px 38px;border-radius:8px;position:relative;overflow:hidden;
+}
+.acta::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,#181B22 0%,#181B22 60%,#E76F13 60%,#E76F13 100%);
+}
+.acta-titulo{text-align:center;margin-bottom:6px;padding-top:6px;}
+.acta-titulo h2{font-family:'Archivo',Arial,sans-serif;font-size:14.5px;font-weight:700;color:#181B22;letter-spacing:.02em;}
+.acta-titulo h3{font-family:'Archivo',Arial,sans-serif;font-size:12.5px;font-weight:700;color:#E76F13;margin-top:4px;text-transform:uppercase;letter-spacing:.03em;}
+.acta-titulo p{font-size:10.5px;color:#555;margin-top:3px;}
+.acta-titulo .acta-rule{width:46px;height:2px;background:#E76F13;margin:10px auto 0;}
+
+.acta-cuerpo{font-size:11px;color:#222;line-height:1.7;margin:16px 0;text-align:justify;}
+
+.acta-specs-wrap{margin:16px 0;border:1px solid #E7E2D6;border-radius:8px;overflow:hidden;}
+.acta-specs-hdr{background:#181B22;color:#fff;font-family:'Archivo',Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;}
+.acta-specs{width:100%;border-collapse:collapse;}
+.acta-specs tr:nth-child(even){background:#FBF9F4;}
+.acta-specs td{padding:6px 12px;font-size:10.5px;color:#222;vertical-align:top;width:50%;font-family:'Courier New',monospace;}
+.acta-specs td strong{font-family:Arial,sans-serif;color:#3A3F4A;font-weight:700;margin-right:4px;}
+
+.acta-garantia{margin:16px 0;}
+.acta-garantia .g-titulo{font-family:'Archivo',Arial,sans-serif;font-size:11px;font-weight:700;text-align:center;color:#181B22;margin-bottom:10px;letter-spacing:.03em;padding-bottom:6px;border-bottom:1px solid #E7E2D6;}
+.cond-item{margin-bottom:9px;padding-left:10px;border-left:2px solid #E76F13;}
+.cond-item .n{font-size:11px;font-weight:bold;color:#181B22;}
+.cond-item p{font-size:10.5px;color:#333;line-height:1.6;}
+
+.acta-firmas{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:32px;}
+.firma-bloque{text-align:center;}
+.firma-linea{border-top:1.5px solid #181B22;margin:0 8px;padding-top:7px;}
+.firma-nombre{font-family:'Archivo',Arial,sans-serif;font-size:10.5px;font-weight:700;color:#181B22;letter-spacing:.03em;}
+.firma-cargo{font-size:10px;color:#444;margin-top:1px;}
+</style>
+
+<div class="mp-app">
+  <div class="mp-header">
+    <div class="mp-mark">MP</div>
+    <div class="mp-header-text">
+      <div class="mp-kicker">Motopower · Documentos de entrega</div>
+      <h1>Generador de acta de entrega</h1>
+      <p>Sube la factura PDF y se extraen todos los datos automáticamente</p>
+    </div>
+  </div>
+
+  <div class="mp-two-col">
+    <div class="mp-card">
+      <div class="mp-card-title"><div class="mp-step-num">1</div><span>Subir factura PDF</span></div>
+      <div class="upload-zone" onclick="document.getElementById('pdfInput').click()">
+        <i class="ti ti-file-type-pdf" aria-hidden="true"></i>
+        <p>Haz clic para subir la factura</p>
+        <small>Factura PDF de Marcimex</small>
+      </div>
+      <input type="file" id="pdfInput" accept=".pdf" style="display:none">
+      <div id="pdfStatus"></div>
+      <div id="debugBox" style="display:none" class="debug-box"></div>
+    </div>
+
+    <div class="mp-card">
+      <div class="mp-card-title"><div class="mp-step-num">2</div><span>Configuración del acta</span></div>
+
+      <div class="mp-subhead">Datos de la empresa</div>
+      <div class="field-group">
+        <label class="field-label">Empresa</label>
+        <input class="field-input" id="cfEmpresa" value="MOTOPOWER  MILAGRO">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Dirección</label>
+        <input class="field-input" id="cfDireccion" value="AV JUAN MONTALVO Y VARGAS TORRES">
+      </div>
+
+      <hr class="section-sep">
+      <div class="mp-subhead">Datos del cliente (auto-extraídos del PDF)</div>
+      <div class="field-group">
+        <label class="field-label">Nombre / Razón social</label>
+        <input class="field-input" id="cfCliente" placeholder="Se extrae del PDF...">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Cédula / RUC</label>
+        <input class="field-input" id="cfCedula" placeholder="Se extrae del PDF...">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Teléfono</label>
+        <input class="field-input" id="cfTelefono" placeholder="Se extrae del PDF...">
+      </div>
+
+      <hr class="section-sep">
+      <div class="mp-subhead">Datos del vehículo (auto-extraídos)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div class="field-group"><label class="field-label">Nro. CAMV/RAMV</label><input class="field-input" id="cfRamv" placeholder="IGM..."></div>
+        <div class="field-group"><label class="field-label">Año fabricación</label><input class="field-input" id="cfAnio" placeholder="20xx"></div>
+        <div class="field-group"><label class="field-label">País de origen</label><input class="field-input" id="cfPais" placeholder="CHINA..."></div>
+        <div class="field-group"><label class="field-label">Nro. Motor</label><input class="field-input" id="cfMotor" placeholder="Motor..."></div>
+        <div class="field-group"><label class="field-label">Nro. Chasis</label><input class="field-input" id="cfChasis" placeholder="Chasis..."></div>
+        <div class="field-group"><label class="field-label">Marca</label><input class="field-input" id="cfMarca" placeholder="IGM..."></div>
+        <div class="field-group"><label class="field-label">Color</label><input class="field-input" id="cfColor" placeholder="Color..."></div>
+        <div class="field-group"><label class="field-label">Modelo</label><input class="field-input" id="cfModelo" placeholder="Modelo..."></div>
+        <div class="field-group"><label class="field-label">Capacidad</label><input class="field-input" id="cfCapacidad" placeholder="2 PERSONAS"></div>
+        <div class="field-group"><label class="field-label">Cilindraje</label><input class="field-input" id="cfCilindraje" placeholder="CC..."></div>
+        <div class="field-group"><label class="field-label">Clase</label><input class="field-input" id="cfClase" placeholder="MOTOCICLETA"></div>
+        <div class="field-group"><label class="field-label">Combustible</label><input class="field-input" id="cfCombustible" placeholder="GASOLINA"></div>
+        <div class="field-group"><label class="field-label">Nro. Ejes</label><input class="field-input" id="cfEjes" placeholder="2"></div>
+        <div class="field-group"><label class="field-label">Nro. Ruedas</label><input class="field-input" id="cfRuedas" placeholder="2"></div>
+        <div class="field-group"><label class="field-label">Subclase/Tipo</label><input class="field-input" id="cfSubclase" placeholder="PASEO..."></div>
+        <div class="field-group"><label class="field-label">Tonelaje</label><input class="field-input" id="cfTonelaje" placeholder="0.25"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-gen" onclick="generarActa()">
+    <i class="ti ti-file-check" aria-hidden="true"></i> Generar acta de entrega
+  </button>
+
+  <div id="actaSection" style="display:none;margin-top:1.5rem;">
+    <div class="preview-hdr">
+      <div>
+        <h2>Vista previa del acta</h2>
+        <div class="mp-sub">Revisa los datos antes de imprimir</div>
+      </div>
+      <button class="btn-print" onclick="imprimirActa()"><i class="ti ti-printer" style="font-size:13px"></i> Imprimir / PDF</button>
+    </div>
+    <div class="acta-wrap"><div id="actaContainer"></div></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+function set(id, val) {
+  if (val && val.trim()) {
+    const el = document.getElementById(id);
+    if (el) el.value = val.trim();
+  }
+}
+
+function tryPatterns(text, patterns) {
+  for (const p of patterns) {
+    const m = text.match(p);
+    if (m && m[1] && m[1].trim().length > 1) return m[1].trim();
+  }
+  return '';
+}
+
+// Limpia texto de nombre de cliente: quita etiquetas de la factura (p.ej. "Guía")
+// que a veces quedan pegadas al nombre por el orden de extracción del PDF.
+function limpiarNombreCliente(s) {
+  if (!s) return s;
+  let c = s.replace(/\s+/g, ' ').trim();
+  // quita "Guía"/"GUIA" (con o sin espacio/acento) al inicio, se repite por si acaso
+  for (let i = 0; i < 3; i++) {
+    c = c.replace(/^gu[ií]a\s*/i, '').trim();
+  }
+  return c;
+}
+
+function parseMarcimex(lines, raw) {
+  const result = {};
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    const next = (lines[i+1] || '').trim();
+    const next2 = (lines[i+2] || '').trim();
+
+    if (/^Raz[oó]n social\s*\/\s*Nombres$/i.test(line)) {
+      const candidate = next2 || next;
+      if (/^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{8,}$/.test(candidate)) {
+        result.cliente = candidate;
+      }
+    }
+    if (/^RUC\s*\/\s*CI[:\s]*$/i.test(line)) {
+      const m = next.match(/^(\d{10,13})$/);
+      if (m) result.cedula = m[1];
+    }
+    if (/^Fecha de$/i.test(line) && !result.cedula) {
+      const m2 = next2.match(/(\d{10,13})/);
+      if (m2) result.cedula = m2[1];
+    }
+    if (/^Tel[eé]fono[:\s]*$/i.test(line)) {
+      const m = next.match(/^(\d{10})/);
+      if (m) result.telefono = m[1];
+    }
+    if (/^C\.I\.\s*:$/i.test(line)) {
+      const m = next.match(/^(\d{10,13})$/);
+      if (m) result.cedula2 = m[1];
+    }
+    if (/^CLIENTE:$/i.test(line)) {
+      if (/^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{8,}$/.test(next)) result.cliente2 = next;
+    }
+  }
+
+  if (!result.cliente && result.cliente2) result.cliente = result.cliente2;
+  if (!result.cedula && result.cedula2) result.cedula = result.cedula2;
+
+  const rci = raw.match(/RUC\s*\/\s*CI[:\s]*\n?\s*([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{8,50})\s*\n\s*(\d{2}\/\d{2}\/\d{4})\s*\n\s*(\d{10,13})/i);
+  if (rci) {
+    if (!result.cliente) result.cliente = rci[1].trim();
+    if (!result.cedula) result.cedula = rci[3].trim();
+  }
+
+  const ciMatch = raw.match(/C\.I\.\s*:\s*(\d{10,13})\s*\n\s*CLIENTE:\s*([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{8,50})/i);
+  if (ciMatch) {
+    if (!result.cedula) result.cedula = ciMatch[1].trim();
+    if (!result.cliente) result.cliente = ciMatch[2].trim();
+  }
+
+  // Respaldo específico: en la tabla de encabezado de Marcimex, el nombre del cliente
+  // aparece justo después de las etiquetas "RUC / CI:" y "Guía" (en ese orden de extracción).
+  if (!result.cliente) {
+    const nombreTrasGuia = raw.match(/Gu[ií]a\s*\n\s*([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{8,50})\s*\n/i);
+    if (nombreTrasGuia) result.cliente = nombreTrasGuia[1].trim();
+  }
+
+  const telMatch = raw.match(/Tel[eé]fono:\s*\n?\s*(\d{10})/i);
+  if (telMatch && !result.telefono) result.telefono = telMatch[1];
+
+  const telInline = raw.match(/Tel[eé]fono:\s*(\d{10})/i);
+  if (telInline && !result.telefono) result.telefono = telInline[1];
+
+  // Limpieza final: quita cualquier etiqueta ("Guía", etc.) que haya quedado pegada al nombre
+  if (result.cliente) result.cliente = limpiarNombreCliente(result.cliente);
+
+  result.ramv    = tryPatterns(raw, [/(?:CAMV|RAMV)[:/\s]*([A-Z0-9]{5,20})/i]);
+  result.anio    = tryPatterns(raw, [/A[ñn]o\s*Fabricaci[oó]n[:/\s]*(\d{4})/i]);
+  result.pais    = tryPatterns(raw, [/Pa[ií]s\s*(?:de\s*)?Origen[:/\s]*([A-ZÁÉÍÓÚÑ\s]{3,30}?)(?=\s*Nro|\s*\n)/i]);
+  result.motor   = tryPatterns(raw, [/Nro\s*Motor[:/\s]*([A-Z0-9]{8,25})/i]);
+  result.chasis  = tryPatterns(raw, [/Nro\s*[Cc]hasis[:/\s]*([A-Z0-9]{10,25})/i]);
+  result.marca   = tryPatterns(raw, [/\nMarca[:/\s]*([A-Z0-9]{2,15})\n/i]);
+  result.color   = tryPatterns(raw, [/\nColor[:/\s]*([A-ZÁÉÍÓÚÑ]{3,15})\n/i]);
+  result.modelo  = tryPatterns(raw, [/MODELO[:/\s]*([A-Z0-9\s]{3,30}?)(?=\nCAPACIDAD|\nNro|\n[A-Z]{3,}:)/i]);
+  result.capac   = tryPatterns(raw, [/CAPACIDAD[:/\s]*([^\n]{3,20}?)(?=\nCILINDRAJE|\n)/i]);
+  result.cilindraje = tryPatterns(raw, [/CILINDRAJE[:/\s]*([^\n]{2,15}?)(?=\nCLASE|\n)/i]);
+  result.clase   = tryPatterns(raw, [/\nCLASE[:/\s]*([A-ZÁÉÍÓÚÑ]{3,20})\n/i]);
+  result.combust = tryPatterns(raw, [/COMBUSTIBLE[:/\s]*([A-ZÁÉÍÓÚÑ]{3,15})/i]);
+  result.ejes    = tryPatterns(raw, [/NUMERO_EJES[:/\s]*(\d+)/i]);
+  result.ruedas  = tryPatterns(raw, [/NUMERO_RUEDAS[:/\s]*(\d+)/i]);
+  result.subclase= tryPatterns(raw, [/SUBCLASE[/\w]*[:/\s]*([A-ZÁÉÍÓÚÑ\s]{3,20}?)(?=\nTONELAJE|\n)/i]);
+  result.tonelaje= tryPatterns(raw, [/TONELAJE[:/\s]*([\d.]+)/i]);
+
+  return result;
+}
+
+document.getElementById('pdfInput').addEventListener('change', async function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const st = document.getElementById('pdfStatus');
+  st.innerHTML = '<div style="margin-top:10px;font-size:12px;color:var(--mp-ink-soft,#555);"><span class="spinner"></span>Leyendo PDF...</div>';
+
+  try {
+    const ab = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+
+    let allLines = [];
+    let rawText = '';
+
+    for (let pg = 1; pg <= pdf.numPages; pg++) {
+      const page = await pdf.getPage(pg);
+      const tc = await page.getTextContent();
+      const pageLines = tc.items.map(i => i.str);
+      allLines = allLines.concat(pageLines);
+      rawText += pageLines.join('\n') + '\n';
+    }
+
+    const data = parseMarcimex(allLines, rawText);
+
+    set('cfCliente',    data.cliente);
+    set('cfCedula',     data.cedula);
+    set('cfTelefono',   data.telefono);
+    set('cfRamv',       data.ramv);
+    set('cfAnio',       data.anio);
+    set('cfPais',       data.pais ? data.pais.trim() : '');
+    set('cfMotor',      data.motor);
+    set('cfChasis',     data.chasis);
+    set('cfMarca',      data.marca);
+    set('cfColor',      data.color);
+    set('cfModelo',     data.modelo ? data.modelo.trim() : '');
+    set('cfCapacidad',  data.capac ? data.capac.trim() : '');
+    set('cfCilindraje', data.cilindraje ? data.cilindraje.trim() : '');
+    set('cfClase',      data.clase);
+    set('cfCombustible',data.combust);
+    set('cfEjes',       data.ejes);
+    set('cfRuedas',     data.ruedas);
+    set('cfSubclase',   data.subclase ? data.subclase.trim() : '');
+    set('cfTonelaje',   data.tonelaje);
+
+    const filled = Object.values(data).filter(v => v && String(v).trim().length > 0).length;
+    st.innerHTML = '<div class="badge-ok"><i class="ti ti-check" style="font-size:11px"></i> ' + filled + ' campos extraídos — revisa y corrige si es necesario</div>';
+
+    const db = document.getElementById('debugBox');
+    db.style.display = 'block';
+    db.innerHTML = '<strong>Extraído:</strong><br>Nombre: ' + (data.cliente||'—') + '<br>Cédula: ' + (data.cedula||'—') + '<br>Tel: ' + (data.telefono||'—') + '<br>RAMV: ' + (data.ramv||'—') + '<br>Motor: ' + (data.motor||'—') + '<br>Chasis: ' + (data.chasis||'—');
+
+  } catch(err) {
+    st.innerHTML = '<div class="badge-err"><i class="ti ti-alert-circle" style="font-size:11px"></i> Error leyendo PDF — completa manualmente</div>';
+    console.error(err);
+  }
+});
+
+function v(id) { return (document.getElementById(id)||{}).value || ''; }
+
+function generarActa() {
+  const cliente   = v('cfCliente') || '___________________________';
+  const cedula    = v('cfCedula') || '___________';
+  const empresa   = v('cfEmpresa');
+  const direccion = v('cfDireccion');
+  const telefono  = v('cfTelefono');
+  const ramv      = v('cfRamv'); const anio = v('cfAnio'); const pais = v('cfPais');
+  const motor     = v('cfMotor'); const chasis = v('cfChasis'); const marca = v('cfMarca');
+  const color     = v('cfColor'); const modelo = v('cfModelo');
+  const capacidad = v('cfCapacidad'); const cilindraje = v('cfCilindraje');
+  const clase     = v('cfClase'); const combustible = v('cfCombustible');
+  const ejes      = v('cfEjes'); const ruedas = v('cfRuedas');
+  const subclase  = v('cfSubclase'); const tonelaje = v('cfTonelaje');
+
+  document.getElementById('actaContainer').innerHTML = `<div class="acta" id="actaDoc">
+    <div class="acta-titulo">
+      <h2>ACEPTACIÓN Y CONOCIMIENTO DE GARANTÍA</h2>
+      <h3>${empresa}</h3>
+      <p>Dirección: ${direccion}</p>
+      <div class="acta-rule"></div>
+    </div>
+    <div class="acta-cuerpo">
+      Por medio del presente documento, dejo constancia de que he recibido y comprendido de manera clara y completa la explicación sobre las condiciones y políticas de garantía del vehículo adquirido, así como las responsabilidades que me corresponden como propietario(a) para la adecuada conservación de dicha garantía.<br><br>
+      Declaro además que recibo el vehículo en óptimas condiciones de funcionamiento y estado general, junto con sus respectivos documentos, incluyendo la matrícula original, sus accesorios correspondientes y la placa respectiva, con la siguiente identificación:
+    </div>
+    <div class="acta-specs-wrap">
+      <div class="acta-specs-hdr">Ficha técnica del vehículo</div>
+      <table class="acta-specs">
+        <tr><td><strong>Nro. CAMV/RAMV:</strong> ${ramv}</td><td><strong>CAPACIDAD:</strong> ${capacidad}</td></tr>
+        <tr><td><strong>Año Fabricación:</strong> ${anio}</td><td><strong>CILINDRAJE:</strong> ${cilindraje}</td></tr>
+        <tr><td><strong>País de Origen:</strong> ${pais}</td><td><strong>CLASE:</strong> ${clase}</td></tr>
+        <tr><td><strong>Nro Motor:</strong> ${motor}</td><td><strong>COMBUSTIBLE:</strong> ${combustible}</td></tr>
+        <tr><td><strong>Nro chasis:</strong> ${chasis}</td><td><strong>NUMERO_EJES:</strong> ${ejes}</td></tr>
+        <tr><td><strong>Marca:</strong> ${marca}</td><td><strong>NUMERO_RUEDAS:</strong> ${ruedas}</td></tr>
+        <tr><td><strong>Color:</strong> ${color}</td><td><strong>SUBCLASE/TIPO:</strong> ${subclase}</td></tr>
+        <tr><td><strong>MODELO:</strong> ${modelo}</td><td><strong>TONELAJE:</strong> ${tonelaje}</td></tr>
+      </table>
+    </div>
+    <div class="acta-garantia">
+      <div class="g-titulo">CONDICIONES DE GARANTÍA</div>
+      <div class="cond-item"><div class="n">1. Mantenimientos en taller autorizado</div>
+        <p>Me comprometo a realizar los mantenimientos preventivos y correctivos únicamente en el taller autorizado por Motopower. En caso de no cumplir con este requisito, perderé automáticamente el derecho a la garantía.</p></div>
+      <div class="cond-item"><div class="n">2. Manual de garantía</div>
+        <p>Reconozco que el manual de garantía es un documento indispensable. En caso de extravío, pierdo el derecho a la garantía.</p></div>
+      <div class="cond-item"><div class="n">3. Cobertura de garantía</div>
+        <p>- Motor: Cubre únicamente el motor, según las condiciones establecidas por el fabricante y/o proveedor.</p>
+        <p>- Sistema eléctrico: Tiene una garantía limitada de 300 km a partir de la fecha de entrega.</p></div>
+    </div>
+    <div class="acta-cuerpo">
+      Declaro haber recibido la motocicleta en buen estado, con el manual de garantía correspondiente y que se me ha explicado verbalmente y por escrito el contenido de este formato.<br>
+      En constancia de lo expuesto, firmo la presente.
+    </div>
+    <div class="acta-firmas">
+      <div class="firma-bloque"><div class="firma-linea">
+        <div class="firma-nombre">FIRMA CLIENTE</div>
+        <div class="firma-cargo">${cliente}</div>
+        <div class="firma-cargo">${cedula}</div>
+        ${telefono ? '<div class="firma-cargo">'+telefono+'</div>' : ''}
+      </div></div>
+      <div class="firma-bloque"><div class="firma-linea">
+        <div class="firma-nombre">FIRMA VENDEDOR</div>
+        <div class="firma-cargo">${empresa}</div>
+      </div></div>
+    </div>
+  </div>`;
+
+  document.getElementById('actaSection').style.display = 'block';
+  document.getElementById('actaSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function imprimirActa() {
+  const el = document.getElementById('actaDoc');
+  if (!el) return;
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Acta de Entrega</title>
+  <style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;font-size:11px;color:#181B22;padding:30px;}
+  .acta{position:relative;}
+  .acta::before{content:"";position:absolute;top:-30px;left:-30px;right:-30px;height:6px;background:linear-gradient(90deg,#181B22 0%,#181B22 60%,#E76F13 60%,#E76F13 100%);}
+  .acta-titulo{text-align:center;margin-bottom:8px;}.acta-titulo h2{font-size:14.5px;font-weight:bold;}.acta-titulo h3{font-size:12.5px;font-weight:bold;color:#E76F13;margin-top:4px;text-transform:uppercase;}.acta-titulo p{font-size:10.5px;margin-top:3px;color:#555;}
+  .acta-titulo .acta-rule{width:46px;height:2px;background:#E76F13;margin:10px auto 0;}
+  .acta-cuerpo{font-size:11px;line-height:1.7;margin:14px 0;text-align:justify;}
+  .acta-specs-wrap{margin:14px 0;border:1px solid #E7E2D6;border-radius:6px;overflow:hidden;}
+  .acta-specs-hdr{background:#181B22;color:#fff;font-size:10px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;}
+  .acta-specs{width:100%;border-collapse:collapse;}.acta-specs tr:nth-child(even){background:#FBF9F4;}
+  .acta-specs td{padding:5px 10px;font-size:10.5px;vertical-align:top;width:50%;font-family:'Courier New',monospace;}
+  .acta-specs td strong{font-family:Arial,sans-serif;font-weight:bold;}
+  .acta-garantia{margin:12px 0;}.acta-garantia .g-titulo{font-size:11px;font-weight:bold;text-align:center;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #E7E2D6;}
+  .cond-item{margin-bottom:7px;padding-left:9px;border-left:2px solid #E76F13;}.cond-item .n{font-size:11px;font-weight:bold;}.cond-item p{font-size:10.5px;line-height:1.5;}
+  .acta-firmas{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;}.firma-bloque{text-align:center;}
+  .firma-linea{border-top:1.5px solid #181B22;padding-top:6px;}.firma-nombre{font-size:10.5px;font-weight:bold;}.firma-cargo{font-size:10px;color:#333;}
+  @media print{@page{margin:12mm;}body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style>
+  </head><body>${el.outerHTML}</body></html>`);
+  win.document.close(); win.focus();
+  setTimeout(() => win.print(), 600);
+}
+</script>
